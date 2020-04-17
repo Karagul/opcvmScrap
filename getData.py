@@ -8,20 +8,20 @@ import urllib.request
 import urllib.error
 
 
-daily_folder = Path("data_files/daily/")
-weekly_folder = Path("data_files/weekly/")
+daily_folder = Path("/data_files/daily/")
+weekly_folder = Path("/data_files/weekly/")
 
 
 if daily_folder.is_dir():
     print("dir exists, proceed")
 else:
-    daily_folder.mkdir()
+    daily_folder.mkdir(parents=True, exist_ok=True)
     print("created dir, proceed")
 
 if weekly_folder.is_dir():
     print("dir exists, proceed")
 else:
-    weekly_folder.mkdir()
+    weekly_folder.mkdir(parents=True, exist_ok=True)
     print("created dir, proceed")
 
 
