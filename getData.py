@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from bs4 import BeautifulSoup
 import requests
 import json
@@ -7,8 +8,22 @@ import urllib.request
 import urllib.error
 
 
-daily_folder = "c:/Users/Imad/Desktop/coding experiments/opcvmScrap/data_files/daily/"
-weekly_folder = "c:/Users/Imad/Desktop/coding experiments/opcvmScrap/data_files/weekly/"
+daily_folder = Path("data_files/daily/")
+weekly_folder = Path("data_files/weekly/")
+
+
+if daily_folder.is_dir():
+    print("dir exists, proceed")
+else:
+    daily_folder.mkdir()
+    print("created dir, proceed")
+
+if weekly_folder.is_dir():
+    print("dir exists, proceed")
+else:
+    weekly_folder.mkdir()
+    print("created dir, proceed")
+
 
 url = "http://www.asfim.ma/?lang=fr&Id=27"
 
@@ -58,9 +73,10 @@ def import_report():
         for report in reports:
             if report['type'] == 'weekly':
                 file_name = report['report_name'].partition("hebdomadaires au ")[2]
-                if os.path.isfile("data_files/weekly/" + file_name + ".xlsx") == False:
+                file_name = file_name + ".xlsx"
+                if os.path.isfile("data_files/weekly/" + file_name) == False:
                     try:
-                        urllib.request.urlretrieve(report['report_link'], weekly_folder + file_name + ".xlsx")
+                        urllib.request.urlretrieve(report['report_link'], weekly_folder / file_name)
                         print(file_name)
                     except urllib.error.HTTPError as e:
                         print(e)
@@ -68,9 +84,10 @@ def import_report():
                     print('already exists')
             else:
                 file_name = report['report_name'].partition("quotidiennes au ")[2]
-                if os.path.isfile("data_files/daily/" + file_name + ".xlsx") == False:
+                file_name = file_name + ".xlsx"
+                if os.path.isfile("data_files/daily/" + file_name) == False:
                     try:
-                        urllib.request.urlretrieve(report['report_link'], daily_folder + file_name + ".xlsx")
+                        urllib.request.urlretrieve(report['report_link'], daily_folder / file_name)
                         print(file_name)
                     except urllib.error.HTTPError as e:
                         print(e)
