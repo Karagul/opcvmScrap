@@ -8,8 +8,8 @@ import urllib.request
 import urllib.error
 
 
-daily_folder = Path("/data_files/daily/")
-weekly_folder = Path("/data_files/weekly/")
+daily_folder = Path('data_files', 'daily/')
+weekly_folder = Path('data_files', 'weekly/')
 
 
 if daily_folder.is_dir():
