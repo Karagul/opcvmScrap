@@ -73,7 +73,10 @@ def import_report():
         for report in reports:
             if report['type'] == 'weekly':
                 file_name = report['report_name'].partition("hebdomadaires au ")[2]
-                file_name = file_name + ".xlsx"
+                if "xlsx" in report['report_link']:
+                    file_name = file_name + ".xlsx"
+                else:
+                    file_name = file_name + ".xls"
                 if os.path.isfile("data_files/weekly/" + file_name) == False:
                     try:
                         urllib.request.urlretrieve(report['report_link'], weekly_folder / file_name)
@@ -84,7 +87,10 @@ def import_report():
                     print('already exists')
             else:
                 file_name = report['report_name'].partition("quotidiennes au ")[2]
-                file_name = file_name + ".xlsx"
+                if "xlsx" in report['report_link']:
+                    file_name = file_name + ".xlsx"
+                else:
+                    file_name = file_name + ".xls"
                 if os.path.isfile("data_files/daily/" + file_name) == False:
                     try:
                         urllib.request.urlretrieve(report['report_link'], daily_folder / file_name)
