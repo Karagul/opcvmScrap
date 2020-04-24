@@ -73,6 +73,7 @@ def import_report():
         for report in reports:
             if report['type'] == 'weekly':
                 file_name = report['report_name'].partition("hebdomadaires au ")[2]
+                file_name = file_name.translate({ord('-'): None})
                 if "xlsx" in report['report_link']:
                     file_name = file_name + ".xlsx"
                 else:
@@ -87,6 +88,7 @@ def import_report():
                     print('already exists')
             else:
                 file_name = report['report_name'].partition("quotidiennes au ")[2]
+                file_name = file_name.translate({ord('-'): None})
                 if "xlsx" in report['report_link']:
                     file_name = file_name + ".xlsx"
                 else:
