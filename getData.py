@@ -6,6 +6,7 @@ import json
 import re
 import urllib.request
 import urllib.error
+import datetime
 
 
 daily_folder = Path('data_files', 'daily/')
@@ -74,6 +75,17 @@ def import_report():
             if report['type'] == 'weekly':
                 file_name = report['report_name'].partition("hebdomadaires au ")[2]
                 file_name = file_name.translate({ord('-'): None})
+                try:
+                    file_name = datetime.datetime.strptime(file_name, "%d%m%Y").strftime("%Y%m%d")
+                except ValueError:
+                    print("error in processing, trying to fix...")
+                    try:
+                        file_name = file_name.replace(" ", "")
+                        file_name = datetime.datetime.strptime(file_name, "%d%m%Y").strftime("%Y%m%d")
+                        print("it worked!")
+                    except Exception as e:
+                        print('error')
+                        print(e)
                 if "xlsx" in report['report_link']:
                     file_name = file_name + ".xlsx"
                 else:
@@ -89,6 +101,17 @@ def import_report():
             else:
                 file_name = report['report_name'].partition("quotidiennes au ")[2]
                 file_name = file_name.translate({ord('-'): None})
+                try:
+                    file_name = datetime.datetime.strptime(file_name, "%d%m%Y").strftime("%Y%m%d")
+                except ValueError:
+                    print("error in processing, trying to fix...")
+                    try:
+                        file_name = file_name.replace(" ", "")
+                        file_name = datetime.datetime.strptime(file_name, "%d%m%Y").strftime("%Y%m%d")
+                        print("it worked!")
+                    except Exception as e:
+                        print('error')
+                        print(e)
                 if "xlsx" in report['report_link']:
                     file_name = file_name + ".xlsx"
                 else:
