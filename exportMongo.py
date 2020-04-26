@@ -69,8 +69,9 @@ def daily():
                     print(e)
                 except NotUniqueError as j:
                     print("already exists")
-        except:
+        except Exception as u:
             print("error reading the excel file")
+            print(u)
     print("Finished processing all OPCVMs with daily frequency")
             
 def weekly():
